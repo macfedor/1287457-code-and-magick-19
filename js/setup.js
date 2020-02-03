@@ -15,6 +15,7 @@ var wizard = document.querySelector('.setup-wizard');
 var wizardCoat = wizard.querySelector('.wizard-coat');
 var wizardEyes = wizard.querySelector('.wizard-eyes');
 var wizardFireball = document.querySelector('.setup-fireball-wrap');
+var currentFireballColorNumber = 0;
 
 var coatColorsFixed = []; // браузер ругается на пробел между rgb и (. завожу новый массив, чтобы не прописывать удаление/добавление этого пробела каждый раз, когда мне надо тянуть данные из coatColors
 for (var n = 0; n < coatColors.length; n++) {
@@ -118,14 +119,13 @@ var changeColor = function (target, array, inputName) {
 };
 
 var changeFireballColor = function () {
-  /* оставляю тут этот код пока на случай, если буду переделывать со случайного цвета на цвет по порядку
-  var currentColor = wizardFireball.style.backgroundColor || getComputedStyle(wizardFireball).backgroundColor;
-  var nextColor = getNextArrayItem(fireballColors, currentColor);
+  currentFireballColorNumber++;
+  if (currentFireballColorNumber > fireballColors.length - 1) {
+    currentFireballColorNumber = 0;
+  }
+  var nextColor = fireballColors[currentFireballColorNumber];
   wizardFireball.setAttribute('style', 'background-color:' + nextColor);
-  */
-  var color = getRandomArrayItem(fireballColors);
-  wizardFireball.setAttribute('style', 'background-color:' + color);
-  document.querySelector('[name="fireball-color"]').value = color;
+  document.querySelector('[name="fireball-color"]').value = nextColor;
 };
 
 setupCloseBtn.addEventListener('click', function () {
